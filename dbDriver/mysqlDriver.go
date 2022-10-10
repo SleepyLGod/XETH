@@ -73,3 +73,7 @@ func (d *MysqlDriver) Create(v interface{}) error {
 func (d *MysqlDriver) QuerySingle(output interface{}, constraints string, params ...string) {
 	d.db.First(output, constraints, params)
 }
+
+func (d *MysqlDriver) QueryMulti(output interface{}, constraints string, params ...string) {
+	d.db.Find(output, constraints, params)
+}

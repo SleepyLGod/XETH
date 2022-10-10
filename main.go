@@ -30,9 +30,9 @@ func main() {
 	if err = driver.Create(u); err != nil {
 		fmt.Println(err)
 	}
-	u2 := &User{}
-	driver.QuerySingle(u2, "name=?", "test")
-	fmt.Println(u2.Name)
+	var u2 []User
+	driver.QueryMulti(&u2, "name=?", "test")
+	fmt.Println(len(u2))
 	driver.CloseDB()
 	server.StartAndListen(":80")
 }
