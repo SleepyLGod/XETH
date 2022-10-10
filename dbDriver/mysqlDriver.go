@@ -70,10 +70,29 @@ func (d *MysqlDriver) Create(v interface{}) error {
 	return nil
 }
 
-func (d *MysqlDriver) QuerySingle(output interface{}, constraints string, params ...string) {
-	d.db.First(output, constraints, params)
+//func (d *MysqlDriver) QuerySingle(output interface{}, constraint string, param ...string) {
+//	d.db.First(output, constraint, param)
+//}
+//
+//func (d *MysqlDriver) QueryMulti(output interface{}, constraint string, param ...string) {
+//	d.db.Find(output, constraint, param)
+//}
+
+type QueryConstraint struct {
+	FieldName string
+	Operator  string
+	Value     string
 }
 
-func (d *MysqlDriver) QueryMulti(output interface{}, constraints string, params ...string) {
-	d.db.Find(output, constraints, params)
+func (d *MysqlDriver) Query(output interface{}, constraints []QueryConstraint) {
+	if len(constraints) < 1 {
+		d.db.Find(output)
+	} else {
+		tx := d.db.Where(constraints[0].FieldName+" "+constraints[0].Operator+" ? ", constraints[0].Value)
+		size := len(constraints)
+		for i := 1; i < size; i++ {
+			tx = tx.Where(constraints[i].FieldName+" "+constraints[i].Operator+" ? ", constraints[i].Value)
+		}
+		tx.Find(output)
+	}
 }

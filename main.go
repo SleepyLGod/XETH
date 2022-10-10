@@ -26,12 +26,24 @@ func main() {
 	}
 
 	//testings
-	u := &User{Name: "test"}
+	u := &User{Name: "333"}
 	if err = driver.Create(u); err != nil {
 		fmt.Println(err)
 	}
 	var u2 []User
-	driver.QueryMulti(&u2, "name=?", "test")
+	con := make([]dbDriver.QueryConstraint, 0)
+
+	con = append(con, dbDriver.QueryConstraint{
+		FieldName: "name",
+		Operator:  ">",
+		Value:     "1",
+	})
+	con = append(con, dbDriver.QueryConstraint{
+		FieldName: "name",
+		Operator:  "!=",
+		Value:     "test",
+	})
+	driver.Query(&u2, con)
 	fmt.Println(len(u2))
 	driver.CloseDB()
 	server.StartAndListen(":80")
