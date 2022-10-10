@@ -17,3 +17,6 @@
 # macOS Finder temp file
 .DS_Store
 */.DS_Store
+
+# goLand files
+.idea/
