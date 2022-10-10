@@ -1,2 +1,2 @@
 # XETH
-An ethereum data intelligent analysis and management open source platform.
+⭐An open source platform about ethereum data intelligent analysis and management.
