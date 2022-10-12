@@ -15,6 +15,8 @@ type User struct {
 }
 
 func main() {
+	// 此处使用py脚本，注意首先配置好py的工作目录为./pkg
+
 	server := xethServer.NewServer()
 	server.Route("GET", "/", func(context *gin.Context) {
 		context.String(http.StatusOK, "Hello XETH!")
