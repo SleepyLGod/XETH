@@ -20,3 +20,6 @@
 
 # goLand files
 .idea/
+
+# data download
+!/pkg/data/
