@@ -22,4 +22,5 @@
 .idea/
 
 # data download
-!/pkg/data/
+/pkg/data/
+!/.env
