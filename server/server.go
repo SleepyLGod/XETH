@@ -1,11 +1,11 @@
 package xethServer
 
 import (
+	"XETH/controller"
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
-
-	"github.com/gin-gonic/gin"
 )
 
 type Server struct {
@@ -46,8 +46,8 @@ func Cors() gin.HandlerFunc {
 }
 
 func NewServer() *Server {
-	// 跨域
 	r := gin.Default()
+	// 跨域
 	r.Use(Cors())
 	return &Server{r}
 }
@@ -59,16 +59,48 @@ func (s *Server) StartAndListen(port string) {
 	}
 }
 
-func (s *Server) Route(method string, path string, handlerFunc gin.HandlerFunc) {
+func (s *Server) Route(method string, path string, controllerFunc gin.HandlerFunc) {
 	if method == "GET" {
-		s.engine.GET(path, handlerFunc)
+		s.engine.GET(path, controllerFunc)
 	} else if method == "POST" {
-		s.engine.POST(path, handlerFunc)
+		s.engine.POST(path, controllerFunc)
 	} else if method == "PUT" {
-		s.engine.PUT(path, handlerFunc)
+		s.engine.PUT(path, controllerFunc)
 	} else if method == "DELETE" {
-		s.engine.DELETE(path, handlerFunc)
+		s.engine.DELETE(path, controllerFunc)
 	} else {
 		panic(fmt.Sprintf("unsupported http method: %s", method))
 	}
+}
+
+// RouterInit 路由生成函数！
+func RouterInit() {
+	server := NewServer()
+
+	//server.Route("GET", "/", func(context *gin.Context) {
+	//	context.String(http.StatusOK, "Hello XETH!")
+	//	return
+	//})
+
+	// block 路由组
+	blockGroup := server.engine.Group("/api/block/v1")
+	blockGroup.Use(Cors())
+	{
+		blockGroup.POST("/create-block", controller.CreateBlockWithDTO)
+		blockGroup.GET("/get-blocks", controller.GetBlocks)
+		blockGroup.POST("/del-block-by-id", controller.DeleteBlockById)
+		blockGroup.POST("/get-block-by-id", controller.GetBlockById)
+		blockGroup.POST("/update-block-by-id", controller.UpdateBlockById)
+		blockGroup.POST("/disable-block-by-id", controller.DisableBlockById)
+		blockGroup.POST("/enable-block-by-id", controller.EnableBlockById)
+	}
+
+	// transaction 路由组
+
+	// internal_transaction 路由组
+
+	// ...其余路由组
+
+	// run
+	server.StartAndListen(":88")
 }

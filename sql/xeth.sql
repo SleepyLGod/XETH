@@ -2,7 +2,7 @@ create table block
 (
     id                        bigint       not null comment 'blockNum'
         primary key,
-    created_at                timestamp    not null comment 'timestamp',
+    created_at                bigint       not null comment 'timestamp',
     transaction_count         int          not null comment 'transactionCount',
     internal_transction_count int          null comment 'internaltransctioncount',
     miner_address             varchar(255) null comment 'mineraddress',
@@ -51,7 +51,7 @@ create table contract_info
 (
     id                       int          not null
         primary key,
-    created_at               timestamp    not null,
+    created_at               bigint       not null,
     address                  varchar(255) null,
     created_block            bigint       null,
     created_transaction_hash varchar(255) null,
@@ -65,7 +65,7 @@ create table erc20_transaction
 (
     id               int unsigned auto_increment
         primary key,
-    created_at       timestamp    not null,
+    created_at       bigint       not null,
     block_num        bigint       null,
     transaction_hash varchar(255) null,
     token_address    varchar(255) null,
@@ -80,7 +80,7 @@ create table erc721_transaction
 (
     id               int unsigned auto_increment
         primary key,
-    created_at       timestamp    not null,
+    created_at       bigint       not null,
     block_num        bigint       null,
     transaction_hash varchar(255) null,
     token_address    varchar(255) null,
@@ -95,7 +95,7 @@ create table internal_transaction
 (
     id                 bigint auto_increment
         primary key,
-    created_at         timestamp    not null,
+    created_at         bigint       not null,
     transaction_hash   varchar(255) null,
     type_trace_address varchar(255) null,
     `from`             varchar(255) null,
@@ -139,6 +139,6 @@ create table transaction
     base_fee_per_gas         bigint       null,
     max_fee_per_gas          bigint       null,
     max_priority_fee_per_gas bigint       null,
-    created_at               timestamp    not null
+    created_at               bigint       not null
 );
 
