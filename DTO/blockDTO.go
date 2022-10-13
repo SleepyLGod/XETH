@@ -1,6 +1,6 @@
 package DTO
 
-type Block struct {
+type CreateBlockDTO struct {
 	BlockNum                int64
 	Timestamp               int64
 	TransactionCount        int32

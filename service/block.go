@@ -1,40 +1,52 @@
 package service
 
 import (
+	dto "XETH/DTO"
 	core "XETH/dbDriver"
 	model "XETH/model"
 	constants "XETH/utils"
 	"fmt"
 )
 
-// 首先存放这三个 NOT NULL 的数据，其余数据之后再进行插入
-// blockNum                int64     `gorm:"column:id;NOT NULL"`
-// timestamp               time.Time `gorm:"column:created_at;NOT NULL"`
-// transactionCount        int32     `gorm:"column:transaction_count;NOT NULL"`
-// internalTransctionCount int32     `gorm:"column:internal_transaction_count"`
-// minerAddress            string    `gorm:"column:miner_address"`
-// blockReward             int64     `gorm:"column:block_reward"`
-// unclesReward            string    `gorm:"column:uncles_reward"` // TODO: 待检测string类型是否正确
-// difficulty              string    `gorm:"column:difficulty"`
-// totalDifficulty         string    `gorm:"column:total_difficulty"`
-// size                    int32     `gorm:"column:size"`
-// gasUsed                 int32     `gorm:"column:gas_used"`
-// gasLimit                int32     `gorm:"column:gas_limit"`
-// baseFeePerGas           int64     `gorm:"column:base_fee_per_gas"`
-// burntFees               int64     `gorm:"column:burnt_fees"`
-// extraData               string    `gorm:"column:extra_data"`
-// hash                    string    `gorm:"column:hash"`
-// parentHash              string    `gorm:"column:parent_hash"`
-// sha3Uncles              string    `gorm:"column:sha3_uncles"`
-// stateRoot               string    `gorm:"column:state_root"`
-// nounce                  string    `gorm:"column:nounce"`
-
+// CreateBlockService 不推荐，只是适合参数特别少的传参方式，但是为了统一格式建议统一使用下面一种方法
 func CreateBlockService(blockNum int64, timestamp int64, transactionCount int32) bool {
 	db := core.GetDB()
 	block := model.Block{
 		BlockNum:         blockNum,
 		Timestamp:        timestamp,
 		TransactionCount: transactionCount,
+	}
+	tx := db.Create(&block)
+	if tx.RowsAffected > 0 {
+		return true
+	}
+	return false
+}
+
+// CreateBlockServiceWithDTO 推荐
+func CreateBlockServiceWithDTO(CreateBlockDTO dto.CreateBlockDTO) bool {
+	db := core.GetDB()
+	block := model.Block{
+		BlockNum:                CreateBlockDTO.BlockNum,
+		Timestamp:               CreateBlockDTO.Timestamp,
+		TransactionCount:        CreateBlockDTO.TransactionCount,
+		InternalTransctionCount: CreateBlockDTO.InternalTransctionCount,
+		MinerAddress:            CreateBlockDTO.MinerAddress,
+		BlockReward:             CreateBlockDTO.BlockReward,
+		UnclesReward:            CreateBlockDTO.UnclesReward,
+		Difficulty:              CreateBlockDTO.Difficulty,
+		TotalDifficulty:         CreateBlockDTO.TotalDifficulty,
+		Size:                    CreateBlockDTO.Size,
+		GasUsed:                 CreateBlockDTO.GasUsed,
+		GasLimit:                CreateBlockDTO.GasLimit,
+		BaseFeePerGas:           CreateBlockDTO.BaseFeePerGas,
+		BurntFees:               CreateBlockDTO.BurntFees,
+		ExtraData:               CreateBlockDTO.ExtraData,
+		Hash:                    CreateBlockDTO.Hash,
+		ParentHash:              CreateBlockDTO.ParentHash,
+		Sha3Uncles:              CreateBlockDTO.Sha3Uncles,
+		StateRoot:               CreateBlockDTO.StateRoot,
+		Nounce:                  CreateBlockDTO.Nounce,
 	}
 	tx := db.Create(&block)
 	if tx.RowsAffected > 0 {
@@ -88,7 +100,7 @@ func DisableBlockByIdService(id int64) (block model.Block, err error) {
 	return block, nil
 }
 
-// EnableBlockByIdService
+// EnableBlockByIdService  考虑到逻辑删除和恢复，这里的操作是将state字段设置为1
 func EnableBlockByIdService(id int64) (block model.Block, err error) {
 	err = core.GetDB().First(&block, id).Error
 	fmt.Println(block)

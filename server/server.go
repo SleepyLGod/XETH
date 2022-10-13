@@ -86,7 +86,7 @@ func RouterInit() {
 	blockGroup := server.engine.Group("/api/block/v1")
 	blockGroup.Use(Cors())
 	{
-		blockGroup.POST("/create-block", controller.CreateBlock)
+		blockGroup.POST("/create-block", controller.CreateBlockWithDTO)
 		blockGroup.GET("/get-blocks", controller.GetBlocks)
 		blockGroup.POST("/del-block-by-id", controller.DeleteBlockById)
 		blockGroup.POST("/get-block-by-id", controller.GetBlockById)

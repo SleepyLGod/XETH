@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"XETH/DTO"
 	"XETH/config"
 	"XETH/service"
 	"fmt"
@@ -22,15 +23,54 @@ func CreateBlock(c *gin.Context) {
 	transactionCount := c.PostForm("transactionCount")
 	BlockNum, _ := strconv.ParseInt(id, 10, 64)
 	Timestamp, _ := strconv.ParseInt(timestamp, 10, 64)
-	//TransactionCount, _ := strconv.Atoi(transactionCount)
+	// TransactionCount, _ := strconv.Atoi(transactionCount)
 	TransactionCount, _ := strconv.ParseInt(transactionCount, 10, 32)
 	ok = service.CreateBlockService(BlockNum, Timestamp, int32(TransactionCount))
 	if !ok {
-		config.Error(c, int(config.ApiCode.CREATEUSERFAILED), config.ApiCode.GetMessage(config.ApiCode.CREATEUSERFAILED))
+		config.Error(c, int(config.ApiCode.CREATEDFAILED), config.ApiCode.GetMessage(config.ApiCode.CREATEDFAILED))
 		return
 	}
 	config.Success(c, nil)
+}
 
+// CreateBlockWithDTO 建议使用json方式的请求
+func CreateBlockWithDTO(c *gin.Context) {
+	// // just for testings
+	//fmt.Printf("c.Request.body: %v", string(data))
+	//log.Printf("c.Request.Method: %v", c.Request.Method)
+	//log.Printf("c.Request.ContentType: %v", c.ContentType())
+	//log.Printf("c.Request.Body: %v", c.Request.Body)
+	//err := c.Request.ParseForm()
+	//if err != nil {
+	//	return
+	//}
+	//log.Printf("c.Request.Form: %v", c.Request.PostForm)
+	//for k, v := range c.Request.PostForm {
+	//	log.Printf("k:%v\n", k)
+	//	log.Printf("v:%v\n", v)
+	//}
+	//log.Printf("c.Request.ContentLength: %v", c.Request.ContentLength)
+	//data, _ = ioutil.ReadAll(c.Request.Body)
+	//log.Printf("c.Request.GetBody: %v", string(data))
+	//
+	//data, err = c.GetRawData()
+	//if err != nil {
+	//	fmt.Println(err.Error())
+	//}
+	//fmt.Printf("data: %v\n", string(data))
+	////把读过的字节流重新放到body
+	//c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(data))
+	var requestBody DTO.CreateBlockDTO
+	if err := c.BindJSON(&requestBody); err != nil {
+		config.Error(c, int(config.ApiCode.CREATEDFAILED), config.ApiCode.GetMessage(config.ApiCode.CREATEDFAILED))
+		return
+	}
+	ok := service.CreateBlockServiceWithDTO(requestBody)
+	if !ok {
+		config.Error(c, int(config.ApiCode.CREATEDFAILED), config.ApiCode.GetMessage(config.ApiCode.CREATEDFAILED))
+		return
+	}
+	config.Success(c, nil)
 }
 
 func GetBlocks(c *gin.Context) {
