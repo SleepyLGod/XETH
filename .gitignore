@@ -23,4 +23,4 @@
 
 # data download
 /pkg/data/
-!/.env
+/.env
