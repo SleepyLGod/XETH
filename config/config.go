@@ -26,7 +26,7 @@ func DatabaseGenerator() databaseLogin {
 	database_dbname=xeth
 	*/
 	dbUsrName := os.Getenv("database_usrname")
-	dbPsw := os.Getenv("database_usrname")
+	dbPsw := os.Getenv("database_psw")
 	dbAddr := os.Getenv("database_addr")
 	dbName := os.Getenv("database_dbname")
 	databaseConfig := databaseLogin{UsrName: dbUsrName, Psw: dbPsw, Addr: dbAddr, DbName: dbName}
