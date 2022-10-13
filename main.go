@@ -1,13 +1,15 @@
 package main
 
 import (
+	"XETH/config"
 	"XETH/dbDriver"
 	xethServer "XETH/server"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"log"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 type User struct {
@@ -60,8 +62,9 @@ func main() {
 		context.String(http.StatusOK, "Hello XETH!")
 		return
 	})
-	//databaseLogin := config.
-	driver, err := dbDriver.NewMysqlDriver(databaseLogin.UsrName, databaseLogin.psw, databaseLogin.addr, databaseLogin.dbName, &User{})
+
+	databaseLogin := config.DatabaseGenerator
+	driver, err := dbDriver.NewMysqlDriver(databaseLogin().UsrName, databaseLogin().Psw, databaseLogin().Addr, databaseLogin().DbName, &User{})
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -1,28 +1,35 @@
 package config
 
 import (
-	"github.com/joho/godotenv"
 	"log"
 	"os"
+
+	"github.com/joho/godotenv"
 )
 
 type databaseLogin struct {
-	usrName string
-	psw     string
-	addr    string
-	dbName  string
+	UsrName string
+	Psw     string
+	Addr    string
+	DbName  string
 }
 
-func init() {
-	err := godotenv.Load() // 载入 godotenv
+func DatabaseGenerator() databaseLogin {
+	err := godotenv.Load() // 载入godotenv
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-
+	/* .env 内容：
+	database_usrname=root
+	database_psw=xxxxxx
+	database_addr=localhost
+	database_dbname=xeth
+	*/
 	dbUsrName := os.Getenv("database_usrname")
 	dbPsw := os.Getenv("database_usrname")
 	dbAddr := os.Getenv("database_addr")
 	dbName := os.Getenv("database_dbname")
-	databaseConfig := databaseLogin{usrName: dbUsrName, psw: dbPsw, addr: dbAddr, dbName: dbName}
+	databaseConfig := databaseLogin{UsrName: dbUsrName, Psw: dbPsw, Addr: dbAddr, DbName: dbName}
 	log.Print(databaseConfig)
+	return databaseConfig
 }
