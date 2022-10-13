@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// 返回的结果：
+// Result 返回的结果：
 type Result struct {
 	Time time.Time   `json:"time"`
 	Code int         `json:"code"`
@@ -18,7 +18,7 @@ type Result struct {
 	Data interface{} `json:"data"`
 }
 
-// 成功
+// Success 成功
 func Success(c *gin.Context, data interface{}) {
 	if data == nil {
 		data = gin.H{}
@@ -32,7 +32,7 @@ func Success(c *gin.Context, data interface{}) {
 	c.JSON(http.StatusOK, res)
 }
 
-// 出错
+// Error 出错
 func Error(c *gin.Context, code int, msg string) {
 	res := Result{}
 	res.Time = time.Now()

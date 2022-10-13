@@ -1,10 +1,8 @@
 package DTO
 
-import "time"
-
 type Block struct {
 	BlockNum                int64
-	Timestamp               time.Time
+	Timestamp               int64
 	TransactionCount        int32
 	InternalTransctionCount int32
 	MinerAddress            string

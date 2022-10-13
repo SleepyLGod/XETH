@@ -23,10 +23,10 @@ type MysqlDriver struct {
 	t  reflect.Type
 }
 
-// 全局变量（只建立一个数据库）
+// Db 全局变量（只建立一个数据库）
 var Db *gorm.DB
 
-// getter
+// GetDB getter
 func GetDB() *gorm.DB {
 	return Db
 }
