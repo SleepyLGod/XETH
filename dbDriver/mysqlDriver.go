@@ -1,13 +1,17 @@
 package dbDriver
 
 import (
+	"XETH/config"
 	"database/sql"
 	"errors"
 	"fmt"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 	"reflect"
 	"time"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 )
 
 const MaxOpenConnections = 10
@@ -17,6 +21,36 @@ const MaxIdleConnections = 10
 type MysqlDriver struct {
 	db *gorm.DB
 	t  reflect.Type
+}
+
+// 全局变量（只建立一个数据库）
+var Db *gorm.DB
+
+// getter
+func GetDB() *gorm.DB {
+	return Db
+}
+
+func NewMysqlDriverFromDsnWithoutInterface(dsn string) {
+	var err error
+	Db, err = gorm.Open(mysql.Open(dsn+"?charset=utf8&parseTime=true"), &gorm.Config{
+		SkipDefaultTransaction: false,
+		NamingStrategy: schema.NamingStrategy{
+			SingularTable: true, // 禁用表名加s
+		},
+		Logger:                                   logger.Default.LogMode(logger.Info), // 打印sql语句
+		DisableAutomaticPing:                     false,
+		DisableForeignKeyConstraintWhenMigrating: true, // 禁用创建外键约束
+	})
+	if err != nil {
+		panic("Connecting database failed: " + err.Error())
+	}
+}
+
+func NewMysqlDriverWithoutInterface() {
+	databaseLogin := config.DatabaseGenerator
+	dsn := databaseLogin().UsrName + ":" + databaseLogin().Psw + "@(" + databaseLogin().Addr + ")/" + databaseLogin().DbName
+	NewMysqlDriverFromDsnWithoutInterface(dsn)
 }
 
 func NewMysqlDriverFromDsn(dsn string, schema interface{}) (*MysqlDriver, error) {
@@ -96,3 +130,25 @@ func (d *MysqlDriver) Query(output interface{}, constraints []QueryConstraint) {
 		tx.Find(output)
 	}
 }
+
+// // testings
+// u := &User{Name: "333"}
+// if err = driver.Create(u); err != nil {
+// 	fmt.Println(err)
+// }
+// var u2 []User
+// con := make([]dbDriver.QueryConstraint, 0)
+
+// con = append(con, dbDriver.QueryConstraint {
+// 	FieldName: "name",
+// 	Operator:  ">",
+// 	Value:     "1",
+// })
+// con = append(con, dbDriver.QueryConstraint {
+// 	FieldName: "name",
+// 	Operator:  "!=",
+// 	Value:     "test",
+// })
+// driver.Query(&u2, con)
+// fmt.Println(len(u2))
+// driver.CloseDB()
