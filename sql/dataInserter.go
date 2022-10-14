@@ -5,7 +5,6 @@ import (
 	"XETH/service"
 	"bufio"
 	"errors"
-	"fmt"
 	"io"
 	"os"
 	"strconv"
@@ -40,7 +39,6 @@ func InsertBlockFromFile(blockInfoFilePath string, blockRewardFilePath string) e
 	if err != nil {
 		return nil
 	}
-	cnt := 0
 	for {
 		infoLine, err := infoBuf.ReadString('\n')
 		if err == io.EOF {
@@ -52,8 +50,6 @@ func InsertBlockFromFile(blockInfoFilePath string, blockRewardFilePath string) e
 		if err != nil {
 			return err
 		}
-		cnt += 1
-		fmt.Println("!!!!!!!!!!!!!!!!!", cnt)
 		splits := strings.Split(infoLine, ",")
 		blockNum, err := strconv.ParseInt(splits[0], 10, 64)
 		timeStamp, err := strconv.ParseInt(splits[1], 10, 64)
