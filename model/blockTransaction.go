@@ -6,18 +6,18 @@ import (
 
 type BlockTransaction struct {
 	gorm.Model
-	Id                   uint32 `gorm:"column:id;NOT NULL"`
-	BlockNum             int64  `gorm:"column:block_num;NOT NULL"`
+	Id                   uint32 `gorm:"column:id;AUTO_INCREMENT"`
+	BlockNum             int64  `gorm:"column:block_num"`
 	Timestamp            int64  `gorm:"column:created_at;NOT NULL"`
-	TransactionHash      string `gorm:"column:transaction_hash;NOT NULL"`
-	From                 string `gorm:"column:from;NOT NULL"`
+	TransactionHash      string `gorm:"column:transaction_hash"`
+	From                 string `gorm:"column:from"`
 	To                   string `gorm:"column:to"`
 	ToCreate             string `gorm:"column:to_create"`
 	FromIsContract       int8   `gorm:"column:from_is_contract"`
 	ToIsContract         int8   `gorm:"column:to_is_contract"`
 	Value                int64  `gorm:"column:value"`
 	GasLimit             int32  `gorm:"column:gas_limit"`
-	GasPrice             int64  `gorm:"column:gas_price"`
+	GasPrice             int32  `gorm:"column:gas_price"`
 	GasUsed              int32  `gorm:"column:gas_used"`
 	CallingFunction      string `gorm:"column:calling_function"`
 	IsError              string `gorm:"column:is_error"`

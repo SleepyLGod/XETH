@@ -12,7 +12,7 @@ func CreateInternalTransactionServiceWithDTO(createItnTxn dto.CreateInternalTran
 	itnTxn := model.InternalTransaction{
 		Id:               createItnTxn.Id,
 		BlockNum:         createItnTxn.BlockNum,
-		Timestamp:        createItnTxn.Timestamp,
+		TimeStamp:        createItnTxn.TimeStamp,
 		TransactionHash:  createItnTxn.TransactionHash,
 		TypeTraceAddress: createItnTxn.TypeTraceAddress,
 		From:             createItnTxn.From,

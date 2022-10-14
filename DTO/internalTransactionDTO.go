@@ -3,7 +3,7 @@ package DTO
 type CreateInternalTransactionDTO struct {
 	Id               uint32 `json:"id"`
 	BlockNum         int64  `json:"blockNum"`
-	Timestamp        int64  `json:"timestamp"`
+	TimeStamp        int64  `json:"timeStamp"`
 	TransactionHash  string `json:"transactionHash"`
 	TypeTraceAddress string `json:"typeTraceAddress"`
 	From             string `json:"from"`
