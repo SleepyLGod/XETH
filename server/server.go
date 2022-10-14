@@ -145,6 +145,16 @@ func RouterInit() {
 		erc721Group.POST("/get-erc721-by-id", controller.GetERC20TransactionById)
 	}
 
+	// token_info 路由组
+	tokenGroup := server.engine.Group("/api/token/v1")
+	tokenGroup.Use(Cors())
+	{
+		tokenGroup.POST("/create-token", controller.CreateTokenInfoWithDTO)
+		tokenGroup.GET("/get-tokens", controller.GetTokenInfos)
+		tokenGroup.POST("/del-token-by-id", controller.DeleteTokenInfoById)
+		tokenGroup.POST("get-token-by-id", controller.GetTokenInfoById)
+	}
+
 	// run
 	server.StartAndListen(":88")
 }

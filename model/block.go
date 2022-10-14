@@ -36,7 +36,8 @@ func (block *Block) Block() string {
 
 func init() {
 	db := core.GetDB()
-	err := db.AutoMigrate(&Block{}, &BlockTransaction{}, &InternalTransaction{}, &ContractInfo{}, &ERC20Transaction{})
+	err := db.AutoMigrate(&Block{}, &BlockTransaction{}, &InternalTransaction{}, &ContractInfo{}, &ERC20Transaction{},
+		&ERC721Transaction{}, &TokenInfo{})
 	if err != nil {
 		return
 	}
