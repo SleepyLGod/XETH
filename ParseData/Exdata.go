@@ -31,20 +31,18 @@ import (
 //	MixDigest   common.Hash    `json:"mixHash"`
 //	Nonce       BlockNonce     `json:"nonce"`
 
-
-
 var (
 	putf = fmt.Printf
 	puts = fmt.Println
 
-	upNum       = 0 
+	upNum       = 0
 	endNum      = 139999999
 	dbPath      = "/media/liangyf/Expansion1/xethdata/geth/chaindata"
 	ancientPath = dbPath + "/ancient"
 )
 
 func main() {
-	ancientDb, err := rawdb.NewLevelDBDatabaseWithFreezer(dbPath, 16, 1, ancientPath, "",false)
+	ancientDb, err := rawdb.NewLevelDBDatabaseWithFreezer(dbPath, 16, 1, ancientPath, "", false)
 	if err != nil {
 		panic(err)
 	}
@@ -58,8 +56,8 @@ func main() {
 	//fmt.Printf("currHiehgt: %d\n", currHiehgt)
 
 	//puts("----------------------------------------------------------------")
-	cnt:=0
-	nextcnt:=1000000
+	//cnt:=0
+	//nextcnt:=1000000
 	for i := upNum; i <= endNum; i++ {
 		// ReadCanonicalHash retrieves the hash assigned to a canonical block number.
 		blkHash := rawdb.ReadCanonicalHash(ancientDb, uint64(i))
@@ -78,8 +76,8 @@ func main() {
 		blkHeader := rawdb.ReadHeader(ancientDb, blkHash, uint64(i))
 		fmt.Printf("blkHeader Coinbase: 0x%x\n", blkHeader.Coinbase)
 		fmt.Printf("blkHeader Time: %d\n", blkHeader.Time)
-		fmt.Printf("blkHeader GasUsed: %d\n",blkHeader.GasUsed)
-		fmt.Printf("blkHeader GasLimit: %d\n",blkHeader.GasLimit)
+		fmt.Printf("blkHeader GasUsed: %d\n", blkHeader.GasUsed)
+		fmt.Printf("blkHeader GasLimit: %d\n", blkHeader.GasLimit)
 
 		// ReadBody retrieves the block body corresponding to the hash.
 		blkBody := rawdb.ReadBody(ancientDb, blkHash, uint64(i))
@@ -89,7 +87,7 @@ func main() {
 			fmt.Printf("uncle Hash: 0x%x\n", uncle.Hash())
 		}
 
-//		fmt.Printf("blkBody Tx size: %x\n", len(blkBody.Transactions))
+		//		fmt.Printf("blkBody Tx size: %x\n", len(blkBody.Transactions))
 		// for _, tx := range blkBody.Transactions {
 		// 	putf("tx Hash: 0x%x\n", tx.Hash())
 		// 	putf("tx from addr: 0x%x\n", getFromAddr(tx))
@@ -106,7 +104,7 @@ func main() {
 }
 
 func getFromAddr(tx *types.Transaction) common.Address {
-	var signer types.Signer = types.FrontierSigner{} 
+	var signer types.Signer = types.FrontierSigner{}
 
 	from, err := types.Sender(signer, tx)
 	if err != nil {
@@ -115,4 +113,3 @@ func getFromAddr(tx *types.Transaction) common.Address {
 
 	return from
 }
-
