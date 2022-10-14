@@ -14,6 +14,7 @@ type Codes struct {
 	CONVERTFAILED   uint
 	NOSUCHNAME      uint
 	EXISTSNAME      uint
+	INVALIDPARAMS   uint
 	Message         map[uint]string
 }
 
@@ -29,6 +30,7 @@ var ApiCode = &Codes{
 	CREATEDFAILED:   2001,
 	LCAKPARAMETERS:  3001,
 	CONVERTFAILED:   3002,
+	INVALIDPARAMS:   3003,
 	NOSUCHNAME:      5001,
 	EXISTSNAME:      5002,
 }

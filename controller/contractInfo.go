@@ -3,6 +3,7 @@ package controller
 import (
 	"XETH/DTO"
 	"XETH/config"
+	"XETH/dbDriver"
 	"XETH/service"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -67,4 +68,14 @@ func GetContractInfoById(c *gin.Context) {
 	}
 	contractInfo := service.GetContractInfoByIdService(newId)
 	config.Success(c, contractInfo)
+}
+
+func GetContractInfoWithConstraints(c *gin.Context) {
+	var cons []dbDriver.QueryConstraint
+	if err := c.BindJSON(&cons); err != nil {
+		config.Error(c, int(config.ApiCode.INVALIDPARAMS), config.ApiCode.GetMessage(config.ApiCode.INVALIDPARAMS))
+		return
+	}
+	contractInfoList := service.GetContractInfosWithConstraintsService(cons)
+	config.Success(c, contractInfoList)
 }

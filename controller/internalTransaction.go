@@ -3,6 +3,7 @@ package controller
 import (
 	"XETH/DTO"
 	"XETH/config"
+	"XETH/dbDriver"
 	"XETH/service"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -67,4 +68,14 @@ func GetInternalTransactionById(c *gin.Context) {
 	}
 	itnTxn := service.GetInternalTransactionByIdService(newId)
 	config.Success(c, itnTxn)
+}
+
+func GetInternalTransactionsWithConstraints(c *gin.Context) {
+	var cons []dbDriver.QueryConstraint
+	if err := c.BindJSON(&cons); err != nil {
+		config.Error(c, int(config.ApiCode.INVALIDPARAMS), config.ApiCode.GetMessage(config.ApiCode.INVALIDPARAMS))
+		return
+	}
+	erc20List := service.GetInternalTransactionsWithConstraintsService(cons)
+	config.Success(c, erc20List)
 }

@@ -93,6 +93,7 @@ func RouterInit() {
 		blockGroup.POST("/update-block-by-id", controller.UpdateBlockById)
 		blockGroup.POST("/disable-block-by-id", controller.DisableBlockById)
 		blockGroup.POST("/enable-block-by-id", controller.EnableBlockById)
+		blockGroup.POST("/get-blocks-with-constraints", controller.GetBlocksWithConstraints)
 	}
 
 	// transaction 路由组
@@ -103,6 +104,7 @@ func RouterInit() {
 		txnGroup.GET("/get-txns", controller.GetBlockTransactions)
 		txnGroup.POST("/del-txn-by-id", controller.DeleteBlockTransactionById)
 		txnGroup.POST("/get-txn-by-id", controller.GetBlockTransactionById)
+		txnGroup.POST("/get-txns-with-constraints", controller.GetBlockTransactionsWithConstraints)
 	}
 
 	// internal_transaction 路由组
@@ -113,6 +115,7 @@ func RouterInit() {
 		itnTxnGroup.GET("/get-txns", controller.GetInternalTransactions)
 		itnTxnGroup.POST("/del-txn-by-id", controller.DeleteInternalTransactionById)
 		itnTxnGroup.POST("/get-txn-by-id", controller.GetInternalTransactionById)
+		itnTxnGroup.POST("/get-txns-with-constraints", controller.GetInternalTransactionsWithConstraints)
 	}
 
 	// contract_info 路由组
@@ -123,6 +126,7 @@ func RouterInit() {
 		cttInfoGroup.GET("/get-ctts", controller.GetContractInfos)
 		cttInfoGroup.POST("/del-ctt-by-id", controller.DeleteContractInfoById)
 		cttInfoGroup.POST("/get-ctt-by-id", controller.GetContractInfoById)
+		cttInfoGroup.POST("/get-ctts-with-constraints", controller.GetContractInfoWithConstraints)
 	}
 
 	// erc20 路由组
@@ -133,6 +137,7 @@ func RouterInit() {
 		erc20Group.GET("/get-erc20s", controller.GetERC20Transactions)
 		erc20Group.POST("/del-erc20-by-id", controller.DeleteERC20TransactionById)
 		erc20Group.POST("/get-erc20-by-id", controller.GetERC20TransactionById)
+		erc20Group.POST("/get-erc20s-with-constraints", controller.GetERC20TransactionsWithConstraints)
 	}
 
 	// erc721 路由组
@@ -143,6 +148,7 @@ func RouterInit() {
 		erc721Group.GET("/get-erc721s", controller.GetERC20Transactions)
 		erc721Group.POST("/del-erc721-by-id", controller.DeleteERC20TransactionById)
 		erc721Group.POST("/get-erc721-by-id", controller.GetERC20TransactionById)
+		erc721Group.POST("/get-erc721s-with-constraints", controller.GetERC721TransactionsWithConstraints)
 	}
 
 	// token_info 路由组
@@ -152,7 +158,8 @@ func RouterInit() {
 		tokenGroup.POST("/create-token", controller.CreateTokenInfoWithDTO)
 		tokenGroup.GET("/get-tokens", controller.GetTokenInfos)
 		tokenGroup.POST("/del-token-by-id", controller.DeleteTokenInfoById)
-		tokenGroup.POST("get-token-by-id", controller.GetTokenInfoById)
+		tokenGroup.POST("/get-token-by-id", controller.GetTokenInfoById)
+		tokenGroup.POST("/get-tokens-with-constraints", controller.GetTokenInfosWithConstraints)
 	}
 
 	// run

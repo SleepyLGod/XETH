@@ -3,6 +3,7 @@ package controller
 import (
 	"XETH/DTO"
 	"XETH/config"
+	"XETH/dbDriver"
 	"XETH/service"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -67,4 +68,14 @@ func GetBlockTransactionById(c *gin.Context) {
 	}
 	blockTxn := service.GetBlockTransactionByIdService(newId)
 	config.Success(c, blockTxn)
+}
+
+func GetBlockTransactionsWithConstraints(c *gin.Context) {
+	var cons []dbDriver.QueryConstraint
+	if err := c.BindJSON(&cons); err != nil {
+		config.Error(c, int(config.ApiCode.INVALIDPARAMS), config.ApiCode.GetMessage(config.ApiCode.INVALIDPARAMS))
+		return
+	}
+	blockTxnList := service.GetBlockTransactionsWithConstraintsService(cons)
+	config.Success(c, blockTxnList)
 }

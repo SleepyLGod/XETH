@@ -3,6 +3,7 @@ package controller
 import (
 	"XETH/DTO"
 	"XETH/config"
+	"XETH/dbDriver"
 	"XETH/service"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -115,8 +116,8 @@ func GetBlockById(c *gin.Context) {
 		config.Error(c, int(config.ApiCode.CONVERTFAILED), config.ApiCode.GetMessage(config.ApiCode.CONVERTFAILED))
 		return
 	}
-	user := service.GetBlockByIdService(newId)
-	config.Success(c, user)
+	block := service.GetBlockByIdService(newId)
+	config.Success(c, block)
 }
 
 func UpdateBlockById(c *gin.Context) {
@@ -190,4 +191,14 @@ func EnableBlockById(c *gin.Context) {
 		return
 	}
 	config.Success(c, nil)
+}
+
+func GetBlocksWithConstraints(c *gin.Context) {
+	var cons []dbDriver.QueryConstraint
+	if err := c.BindJSON(&cons); err != nil {
+		config.Error(c, int(config.ApiCode.INVALIDPARAMS), config.ApiCode.GetMessage(config.ApiCode.INVALIDPARAMS))
+		return
+	}
+	blockList := service.GetBlocksWithConstraintsService(cons)
+	config.Success(c, blockList)
 }

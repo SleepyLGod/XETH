@@ -3,6 +3,7 @@ package controller
 import (
 	"XETH/DTO"
 	"XETH/config"
+	"XETH/dbDriver"
 	"XETH/service"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -66,4 +67,14 @@ func GetERC20TransactionById(c *gin.Context) {
 	}
 	erc20Txn := service.GetERC20TransactionByIdService(newId)
 	config.Success(c, erc20Txn)
+}
+
+func GetERC20TransactionsWithConstraints(c *gin.Context) {
+	var cons []dbDriver.QueryConstraint
+	if err := c.BindJSON(&cons); err != nil {
+		config.Error(c, int(config.ApiCode.INVALIDPARAMS), config.ApiCode.GetMessage(config.ApiCode.INVALIDPARAMS))
+		return
+	}
+	erc20List := service.GetERC20TransactionsWithConstraintsService(cons)
+	config.Success(c, erc20List)
 }
