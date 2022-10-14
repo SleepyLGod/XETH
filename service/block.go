@@ -60,6 +60,11 @@ func GetBlocksService() (blockList []*model.Block) {
 	return blockList
 }
 
+func GetBlocksWithConstraintsService(constraints []core.QueryConstraint) (blockList []*model.Block) {
+	core.QueryWithDb(core.GetDB(), &blockList, constraints)
+	return blockList
+}
+
 func DeleteBlockByIdService(id int64) (err error, ok bool) {
 	err = core.GetDB().First(&model.Block{}, id).Error
 	if err != nil {
