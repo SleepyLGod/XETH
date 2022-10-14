@@ -4,7 +4,7 @@ create table block
         primary key,
     created_at                bigint       not null comment 'timestamp',
     transaction_count         int          not null comment 'transactionCount',
-    internal_transction_count int          null comment 'internaltransctioncount',
+    internal_transaction_count int          null comment 'internaltransctioncount',
     miner_address             varchar(255) null comment 'mineraddress',
     block_reward              bigint       null,
     uncles_reward             varchar(255) null,
