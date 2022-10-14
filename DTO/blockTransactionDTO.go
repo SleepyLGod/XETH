@@ -14,7 +14,7 @@ type CreateBlockTransactionDTO struct {
 	GasPrice             int64  `json:"gasPrice"`
 	GasUsed              int32  `json:"gasUsed"`
 	CallingFunction      string `json:"callingFunction"`
-	IsError              int8   `json:"isError"`
+	IsError              string `json:"isError"`
 	Eip2718type          string `json:"eip2718Type"`
 	BaseFeePerGas        int64  `json:"baseFeePerGas"`
 	MaxFeePerGas         int64  `json:"maxFeePerGas"`

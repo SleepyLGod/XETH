@@ -17,7 +17,7 @@ type BlockTransaction struct {
 	GasPrice             int64  `gorm:"column:gas_price"`
 	GasUsed              int32  `gorm:"column:gas_used"`
 	CallingFunction      string `gorm:"column:calling_function"`
-	IsError              int8   `gorm:"column:is_error"`
+	IsError              string `gorm:"column:is_error"`
 	Eip2718type          string `gorm:"column:eip_2718_type"`
 	BaseFeePerGas        int64  `gorm:"column:base_fee_per_gas"`
 	MaxFeePerGas         int64  `gorm:"column:max_fee_per_gas"`
