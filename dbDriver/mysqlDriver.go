@@ -118,6 +118,19 @@ type QueryConstraint struct {
 	Value     string
 }
 
+func QueryWithDb(db *gorm.DB, output interface{}, constraints []QueryConstraint) {
+	if len(constraints) < 1 {
+		db.Find(output)
+	} else {
+		tx := db.Where(constraints[0].FieldName+" "+constraints[0].Operator+" ? ", constraints[0].Value)
+		size := len(constraints)
+		for i := 1; i < size; i++ {
+			tx = tx.Where(constraints[i].FieldName+" "+constraints[i].Operator+" ? ", constraints[i].Value)
+		}
+		tx.Find(output)
+	}
+}
+
 func (d *MysqlDriver) Query(output interface{}, constraints []QueryConstraint) {
 	if len(constraints) < 1 {
 		d.db.Find(output)
