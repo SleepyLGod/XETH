@@ -115,7 +115,15 @@ func RouterInit() {
 		itnTxnGroup.POST("/get-txn-by-id", controller.GetInternalTransactionById)
 	}
 
-	// ...其余路由组
+	// contract_info 路由组
+	cttInfoGroup := server.engine.Group("/api/cttInfo/v1")
+	cttInfoGroup.Use(Cors())
+	{
+		cttInfoGroup.POST("/create-ctt", controller.CreateContractInfoWithDTO)
+		cttInfoGroup.GET("/get-ctts", controller.GetContractInfos)
+		cttInfoGroup.POST("/del-ctt-by-id", controller.DeleteContractInfoById)
+		cttInfoGroup.POST("/get-ctt-by-id", controller.GetContractInfoById)
+	}
 
 	// run
 	server.StartAndListen(":88")
