@@ -1,6 +1,7 @@
 package DTO
 
 type CreateContractInfoDTO struct {
+	Id                     int64  `json:"id"`
 	CreatedBlock           int64  `json:"createdBlock"`
 	CreatedTimeStamp       int64  `json:"createdTimeStamp"`
 	Address                int64  `json:"address"`

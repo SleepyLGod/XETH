@@ -10,6 +10,7 @@ import (
 func CreateContractInfoServiceWithDTO(createContractInfo dto.CreateContractInfoDTO) bool {
 	db := core.GetDB()
 	ctt := model.ContractInfo{
+		Id:                     createContractInfo.Id,
 		CreatedBlock:           createContractInfo.CreatedBlock,
 		CreatedTimeStamp:       createContractInfo.CreatedTimeStamp,
 		Address:                createContractInfo.Address,

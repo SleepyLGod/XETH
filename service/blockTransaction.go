@@ -10,6 +10,7 @@ import (
 func CreateBlockTransactionServiceWithDTO(createBlockTxn dto.CreateBlockTransactionDTO) bool {
 	db := core.GetDB()
 	blockTxn := model.BlockTransaction{
+		Id:                   createBlockTxn.Id,
 		BlockNum:             createBlockTxn.BlockNum,
 		Timestamp:            createBlockTxn.Timestamp,
 		TransactionHash:      createBlockTxn.TransactionHash,

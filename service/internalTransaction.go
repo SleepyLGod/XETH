@@ -10,6 +10,7 @@ import (
 func CreateInternalTransactionServiceWithDTO(createItnTxn dto.CreateInternalTransactionDTO) bool {
 	db := core.GetDB()
 	itnTxn := model.InternalTransaction{
+		Id:               createItnTxn.Id,
 		BlockNum:         createItnTxn.BlockNum,
 		Timestamp:        createItnTxn.Timestamp,
 		TransactionHash:  createItnTxn.TransactionHash,

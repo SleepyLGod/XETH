@@ -1,10 +1,13 @@
 package model
 
-import "gorm.io/gorm"
+import (
+	"gorm.io/gorm"
+)
 
 type BlockTransaction struct {
 	gorm.Model
-	BlockNum             int64  `gorm:"column:id;NOT NULL"`
+	Id                   int64  `gorm:"column:id;NOT NULL"`
+	BlockNum             int64  `gorm:"column:block_num;NOT NULL"`
 	Timestamp            int64  `gorm:"column:created_at;NOT NULL"`
 	TransactionHash      string `gorm:"column:transaction_hash;NOT NULL"`
 	From                 string `gorm:"column:from;NOT NULL"`

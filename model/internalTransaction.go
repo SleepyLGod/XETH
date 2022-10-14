@@ -4,7 +4,8 @@ import "gorm.io/gorm"
 
 type InternalTransaction struct {
 	gorm.Model
-	BlockNum         int64  `gorm:"column:id;NOT NULL"`
+	Id               int64  `gorm:"column:id;NOT NULL"`
+	BlockNum         int64  `gorm:"column:block_num;NOT NULL"`
 	Timestamp        int64  `gorm:"column:created_at;NOT NULL"`
 	TransactionHash  string `gorm:"column:transaction_hash;NOT NULL"`
 	TypeTraceAddress string `gorm:"column:type_trace_address;NOT NULL"`

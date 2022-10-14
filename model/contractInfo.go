@@ -4,7 +4,8 @@ import "gorm.io/gorm"
 
 type ContractInfo struct {
 	gorm.Model
-	CreatedBlock           int64  `gorm:"column:id;NOT NULL"`
+	Id                     int64  `gorm:"column:id;NOT NULL"`
+	CreatedBlock           int64  `gorm:"column:created_block;NOT NULL"`
 	CreatedTimeStamp       int64  `gorm:"column:created_at;NOT NULL"`
 	Address                int64  `gorm:"column:address"`
 	CreatedTransactionHash string `gorm:"column:created_transaction_hash"`
