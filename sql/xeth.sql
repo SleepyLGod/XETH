@@ -49,7 +49,7 @@ create table block_and_transaction
 
 create table contract_info
 (
-    id                       int          not null
+    id                       int unsigned auto_increment
         primary key,
     created_at               bigint       not null,
     address                  varchar(255) null,
@@ -93,7 +93,7 @@ create table erc721_transaction
 
 create table internal_transaction
 (
-    id                 bigint auto_increment
+    id                 int unsigned auto_increment
         primary key,
     created_at         bigint       not null,
     transaction_hash   varchar(255) null,
@@ -120,7 +120,7 @@ create table token_info
 
 create table transaction
 (
-    id                       bigint auto_increment
+    id                       int unsigned auto_increment
         primary key,
     block_num                bigint       null,
     transaction_hash         varchar(255) null,
