@@ -106,6 +106,14 @@ func RouterInit() {
 	}
 
 	// internal_transaction 路由组
+	itnTxnGroup := server.engine.Group("/api/itnTxn/v1")
+	itnTxnGroup.Use(Cors())
+	{
+		itnTxnGroup.POST("/create-txn", controller.CreateInternalTransactionWithDTO)
+		itnTxnGroup.GET("/get-txns", controller.GetInternalTransactions)
+		itnTxnGroup.POST("/del-txn-by-id", controller.DeleteInternalTransactionById)
+		itnTxnGroup.POST("/get-txn-by-id", controller.GetInternalTransactionById)
+	}
 
 	// ...其余路由组
 
