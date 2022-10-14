@@ -12,7 +12,7 @@ func CreateBlockTransactionServiceWithDTO(createBlockTxn dto.CreateBlockTransact
 	blockTxn := model.BlockTransaction{
 		Id:                   createBlockTxn.Id,
 		BlockNum:             createBlockTxn.BlockNum,
-		Timestamp:            createBlockTxn.Timestamp,
+		TimeStamp:            createBlockTxn.TimeStamp,
 		TransactionHash:      createBlockTxn.TransactionHash,
 		From:                 createBlockTxn.From,
 		To:                   createBlockTxn.To,

@@ -196,6 +196,7 @@ func EnableBlockById(c *gin.Context) {
 func GetBlocksWithConstraints(c *gin.Context) {
 	var cons []dbDriver.QueryConstraint
 	if err := c.BindJSON(&cons); err != nil {
+		fmt.Println("bingding error")
 		config.Error(c, int(config.ApiCode.INVALIDPARAMS), config.ApiCode.GetMessage(config.ApiCode.INVALIDPARAMS))
 		return
 	}

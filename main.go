@@ -1,7 +1,7 @@
 package main
 
 import (
-	"XETH/DTO"
+	"XETH/dbDriver"
 	server "XETH/server"
 	"encoding/json"
 	"os"
@@ -18,6 +18,10 @@ func test() {
 	if err != nil {
 		panic(err)
 	}
-	block := DTO.CreateBlockDTO{}
+	block := dbDriver.QueryConstraint{
+		FieldName: "",
+		Operator:  "",
+		Value:     "",
+	}
 	json.NewEncoder(file).Encode(block)
 }

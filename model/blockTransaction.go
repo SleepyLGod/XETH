@@ -8,7 +8,7 @@ type BlockTransaction struct {
 	gorm.Model
 	Id                   uint32 `gorm:"column:id;AUTO_INCREMENT"`
 	BlockNum             int64  `gorm:"column:block_num"`
-	Timestamp            int64  `gorm:"column:created_at;NOT NULL"`
+	TimeStamp            int64  `gorm:"column:created_at;NOT NULL"`
 	TransactionHash      string `gorm:"column:transaction_hash"`
 	From                 string `gorm:"column:from"`
 	To                   string `gorm:"column:to"`

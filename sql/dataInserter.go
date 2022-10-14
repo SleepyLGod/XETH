@@ -67,7 +67,7 @@ func InsertBlockFromFile(blockInfoFilePath string, blockRewardFilePath string) e
 		blockReward, err := strconv.ParseInt(rewardSplits[3], 10, 64)
 		block := dto.CreateBlockDTO{
 			BlockNum:                blockNum,
-			Timestamp:               timeStamp,
+			TimeStamp:               timeStamp,
 			TransactionCount:        int32(txnCount),
 			InternalTransctionCount: int32(itnlTxnCnt),
 			MinerAddress:            splits[9],

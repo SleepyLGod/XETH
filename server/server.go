@@ -88,6 +88,10 @@ func RouterInit() {
 	{
 		blockGroup.POST("/create-block", controller.CreateBlockWithDTO)
 		blockGroup.GET("/get-blocks", controller.GetBlocks)
+		/*
+			删除后在数据库中仍存在，只是deleted_at被设置为删除时间，从而用gorm查询不到。
+			但是再次插入相同id的数据时，会插入失败。
+		*/
 		blockGroup.POST("/del-block-by-id", controller.DeleteBlockById)
 		blockGroup.POST("/get-block-by-id", controller.GetBlockById)
 		blockGroup.POST("/update-block-by-id", controller.UpdateBlockById)

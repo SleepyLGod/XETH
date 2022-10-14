@@ -13,7 +13,7 @@ func CreateBlockService(blockNum int64, timestamp int64, transactionCount int32)
 	db := core.GetDB()
 	block := model.Block{
 		BlockNum:         blockNum,
-		Timestamp:        timestamp,
+		TimeStamp:        timestamp,
 		TransactionCount: transactionCount,
 	}
 	tx := db.Create(&block)
@@ -27,26 +27,26 @@ func CreateBlockService(blockNum int64, timestamp int64, transactionCount int32)
 func CreateBlockServiceWithDTO(CreateBlockDTO dto.CreateBlockDTO) bool {
 	db := core.GetDB()
 	block := model.Block{
-		BlockNum:                CreateBlockDTO.BlockNum,
-		Timestamp:               CreateBlockDTO.Timestamp,
-		TransactionCount:        CreateBlockDTO.TransactionCount,
-		InternalTransctionCount: CreateBlockDTO.InternalTransctionCount,
-		MinerAddress:            CreateBlockDTO.MinerAddress,
-		BlockReward:             CreateBlockDTO.BlockReward,
-		UnclesReward:            CreateBlockDTO.UnclesReward,
-		Difficulty:              CreateBlockDTO.Difficulty,
-		TotalDifficulty:         CreateBlockDTO.TotalDifficulty,
-		Size:                    CreateBlockDTO.Size,
-		GasUsed:                 CreateBlockDTO.GasUsed,
-		GasLimit:                CreateBlockDTO.GasLimit,
-		BaseFeePerGas:           CreateBlockDTO.BaseFeePerGas,
-		BurntFees:               CreateBlockDTO.BurntFees,
-		ExtraData:               CreateBlockDTO.ExtraData,
-		Hash:                    CreateBlockDTO.Hash,
-		ParentHash:              CreateBlockDTO.ParentHash,
-		Sha3Uncles:              CreateBlockDTO.Sha3Uncles,
-		StateRoot:               CreateBlockDTO.StateRoot,
-		Nounce:                  CreateBlockDTO.Nounce,
+		BlockNum:                 CreateBlockDTO.BlockNum,
+		TimeStamp:                CreateBlockDTO.TimeStamp,
+		TransactionCount:         CreateBlockDTO.TransactionCount,
+		InternalTransactionCount: CreateBlockDTO.InternalTransctionCount,
+		MinerAddress:             CreateBlockDTO.MinerAddress,
+		BlockReward:              CreateBlockDTO.BlockReward,
+		UnclesReward:             CreateBlockDTO.UnclesReward,
+		Difficulty:               CreateBlockDTO.Difficulty,
+		TotalDifficulty:          CreateBlockDTO.TotalDifficulty,
+		Size:                     CreateBlockDTO.Size,
+		GasUsed:                  CreateBlockDTO.GasUsed,
+		GasLimit:                 CreateBlockDTO.GasLimit,
+		BaseFeePerGas:            CreateBlockDTO.BaseFeePerGas,
+		BurntFees:                CreateBlockDTO.BurntFees,
+		ExtraData:                CreateBlockDTO.ExtraData,
+		Hash:                     CreateBlockDTO.Hash,
+		ParentHash:               CreateBlockDTO.ParentHash,
+		Sha3Uncles:               CreateBlockDTO.Sha3Uncles,
+		StateRoot:                CreateBlockDTO.StateRoot,
+		Nounce:                   CreateBlockDTO.Nounce,
 	}
 	tx := db.Create(&block)
 	if tx.RowsAffected > 0 {
@@ -55,13 +55,21 @@ func CreateBlockServiceWithDTO(CreateBlockDTO dto.CreateBlockDTO) bool {
 	return false
 }
 
-func GetBlocksService() (blockList []*model.Block) {
-	core.GetDB().Find(&blockList)
+func GetBlocksService() []dto.CreateBlockDTO {
+	var modelList []*model.Block
+	blockList := make([]dto.CreateBlockDTO, 0)
+	core.GetDB().Find(&modelList)
+	size := len(modelList)
+	for i := 0; i < size; i++ {
+		blockList = append(blockList, dto.BlockDTOFromGorm(modelList[i]))
+	}
 	return blockList
 }
 
-func GetBlocksWithConstraintsService(constraints []core.QueryConstraint) (blockList []*model.Block) {
-	core.QueryWithDb(core.GetDB(), &blockList, constraints)
+func GetBlocksWithConstraintsService(constraints []core.QueryConstraint) []dto.CreateBlockDTO {
+	var schema []*model.Block
+	core.QueryWithDb(core.GetDB(), &schema, constraints)
+	blockList := dto.BlockDTOS(schema)
 	return blockList
 }
 
@@ -74,9 +82,10 @@ func DeleteBlockByIdService(id int64) (err error, ok bool) {
 	return err, true
 }
 
-func GetBlockByIdService(id int64) (block []*model.Block) {
-	core.GetDB().First(&block, id)
-	return
+func GetBlockByIdService(id int64) dto.CreateBlockDTO {
+	var schema *model.Block
+	core.GetDB().First(&schema, id)
+	return dto.BlockDTOFromGorm(schema)
 }
 
 func UpdateBlockByIdService(id int64, timestamp int64, transactionCount int32) (block model.Block, ok bool, err error) {
@@ -85,7 +94,7 @@ func UpdateBlockByIdService(id int64, timestamp int64, transactionCount int32) (
 		return block, false, err
 	}
 	block.BlockNum = id
-	block.Timestamp = timestamp
+	block.TimeStamp = timestamp
 	block.TransactionCount = transactionCount
 	err = core.GetDB().Save(&block).Error
 	if err != nil {
