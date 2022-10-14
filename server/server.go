@@ -96,6 +96,14 @@ func RouterInit() {
 	}
 
 	// transaction 路由组
+	txnGroup := server.engine.Group("/api/blockTxn/v1")
+	txnGroup.Use(Cors())
+	{
+		txnGroup.POST("/create-txn", controller.CreateBlockTransactionWithDTO)
+		txnGroup.GET("/get-txns", controller.GetBlockTransactions)
+		txnGroup.POST("/del-txn-by-id", controller.DeleteBlockTransactionById)
+		txnGroup.POST("/get-txn-by-id", controller.GetBlockTransactionById)
+	}
 
 	// internal_transaction 路由组
 
