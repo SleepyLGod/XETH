@@ -125,6 +125,26 @@ func RouterInit() {
 		cttInfoGroup.POST("/get-ctt-by-id", controller.GetContractInfoById)
 	}
 
+	// erc20 路由组
+	erc20Group := server.engine.Group("/api/erc20/v1")
+	erc20Group.Use(Cors())
+	{
+		erc20Group.POST("/create-erc20", controller.CreateERC20TransactionWithDTO)
+		erc20Group.GET("/get-erc20s", controller.GetERC20Transactions)
+		erc20Group.POST("/del-erc20-by-id", controller.DeleteERC20TransactionById)
+		erc20Group.POST("/get-erc20-by-id", controller.GetERC20TransactionById)
+	}
+
+	// erc721 路由组
+	erc721Group := server.engine.Group("/api/erc721/v1")
+	erc721Group.Use(Cors())
+	{
+		erc721Group.POST("/create-erc721", controller.CreateERC20TransactionWithDTO)
+		erc721Group.GET("/get-erc721s", controller.GetERC20Transactions)
+		erc721Group.POST("/del-erc721-by-id", controller.DeleteERC20TransactionById)
+		erc721Group.POST("/get-erc721-by-id", controller.GetERC20TransactionById)
+	}
+
 	// run
 	server.StartAndListen(":88")
 }
