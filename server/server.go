@@ -156,7 +156,7 @@ func RouterInit() {
 	}
 
 	// token_info 路由组
-	tokenGroup := server.engine.Group("/api/token/v1")
+	tokenGroup := server.engine.Group("/api/tokenInfo/v1")
 	tokenGroup.Use(Cors())
 	{
 		tokenGroup.POST("/create-token", controller.CreateTokenInfoWithDTO)

@@ -24,14 +24,16 @@ func CreateTokenInfoServiceWithDTO(createTokenInfo dto.CreateTokenInfoDTO) bool 
 	return false
 }
 
-func GetTokenInfosService() (tokenInfoList []*model.TokenInfo) {
-	core.GetDB().Find(&tokenInfoList)
-	return
+func GetTokenInfosService() []dto.CreateTokenInfoDTO {
+	var schema []*model.TokenInfo
+	core.GetDB().Find(&schema)
+	return dto.TokenInfoDTOS(schema)
 }
 
-func GetTokenInfosWithConstraintsService(constraints []core.QueryConstraint) (tokenInfoList []*model.TokenInfo) {
-	core.QueryWithDb(core.GetDB(), &tokenInfoList, constraints)
-	return
+func GetTokenInfosWithConstraintsService(constraints []core.QueryConstraint) []dto.CreateTokenInfoDTO {
+	var schema []*model.TokenInfo
+	core.QueryWithDb(core.GetDB(), &schema, constraints)
+	return dto.TokenInfoDTOS(schema)
 }
 
 func DeleteTokenInfoByIdService(id int64) (err error, ok bool) {
@@ -43,7 +45,8 @@ func DeleteTokenInfoByIdService(id int64) (err error, ok bool) {
 	return err, true
 }
 
-func GetTokenInfoByIdService(id int64) (tokenInfo []*model.TokenInfo) {
-	core.GetDB().First(&tokenInfo, id)
-	return
+func GetTokenInfoByIdService(id int64) dto.CreateTokenInfoDTO {
+	var schema *model.TokenInfo
+	core.GetDB().First(&schema, id)
+	return dto.TokenInfoDTOFromGorm(schema)
 }
