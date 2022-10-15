@@ -28,14 +28,16 @@ func CreateERC721TransactionServiceWithDTO(createERC721Txn dto.CreateERC721Trans
 	return false
 }
 
-func GetERC721TransactionsService() (erc721TxnList []*model.ERC721Transaction) {
-	core.GetDB().Find(&erc721TxnList)
-	return
+func GetERC721TransactionsService() []dto.CreateERC721TransactionDTO {
+	var schema []*model.ERC721Transaction
+	core.GetDB().Find(&schema)
+	return dto.ERC721TransactionDTOS(schema)
 }
 
-func GetERC721TransactionsWithConstraintsService(constraints []core.QueryConstraint) (erc721TxnList []*model.ERC721Transaction) {
-	core.QueryWithDb(core.GetDB(), &erc721TxnList, constraints)
-	return
+func GetERC721TransactionsWithConstraintsService(constraints []core.QueryConstraint) []dto.CreateERC721TransactionDTO {
+	var schema []*model.ERC721Transaction
+	core.QueryWithDb(core.GetDB(), &schema, constraints)
+	return dto.ERC721TransactionDTOS(schema)
 }
 
 func DeleteERC721TransactionByIdService(id int64) (err error, ok bool) {
@@ -47,7 +49,8 @@ func DeleteERC721TransactionByIdService(id int64) (err error, ok bool) {
 	return err, true
 }
 
-func GetERC721TransactionByIdService(id int64) (erc20Txn []*model.ERC721Transaction) {
-	core.GetDB().First(&erc20Txn, id)
-	return
+func GetERC721TransactionByIdService(id int64) dto.CreateERC721TransactionDTO {
+	var schema *model.ERC721Transaction
+	core.GetDB().First(&schema, id)
+	return dto.ERC721TransactionDTOFromGorm(schema)
 }

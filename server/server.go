@@ -148,10 +148,10 @@ func RouterInit() {
 	erc721Group := server.engine.Group("/api/erc721/v1")
 	erc721Group.Use(Cors())
 	{
-		erc721Group.POST("/create-erc721", controller.CreateERC20TransactionWithDTO)
-		erc721Group.GET("/get-erc721s", controller.GetERC20Transactions)
-		erc721Group.POST("/del-erc721-by-id", controller.DeleteERC20TransactionById)
-		erc721Group.POST("/get-erc721-by-id", controller.GetERC20TransactionById)
+		erc721Group.POST("/create-erc721", controller.CreateERC721TransactionWithDTO)
+		erc721Group.GET("/get-erc721s", controller.GetERC721Transactions)
+		erc721Group.POST("/del-erc721-by-id", controller.DeleteERC721TransactionById)
+		erc721Group.POST("/get-erc721-by-id", controller.GetERC721TransactionById)
 		erc721Group.POST("/get-erc721s-with-constraints", controller.GetERC721TransactionsWithConstraints)
 	}
 
