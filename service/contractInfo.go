@@ -28,14 +28,16 @@ func CreateContractInfoServiceWithDTO(createContractInfo dto.CreateContractInfoD
 	return false
 }
 
-func GetContractInfosService() (contractInfoList []*model.ContractInfo) {
-	core.GetDB().Find(&contractInfoList)
-	return contractInfoList
+func GetContractInfosService() []dto.CreateContractInfoDTO {
+	var schema []*model.ContractInfo
+	core.GetDB().Find(&schema)
+	return dto.ContractInfoDTOS(schema)
 }
 
-func GetContractInfosWithConstraintsService(constraints []core.QueryConstraint) (contractInfoList []*model.BlockTransaction) {
-	core.QueryWithDb(core.GetDB(), &contractInfoList, constraints)
-	return
+func GetContractInfosWithConstraintsService(constraints []core.QueryConstraint) []dto.CreateContractInfoDTO {
+	var schema []*model.ContractInfo
+	core.QueryWithDb(core.GetDB(), &schema, constraints)
+	return dto.ContractInfoDTOS(schema)
 }
 
 func DeleteContractInfoByIdService(id int64) (err error, ok bool) {
@@ -47,7 +49,8 @@ func DeleteContractInfoByIdService(id int64) (err error, ok bool) {
 	return err, true
 }
 
-func GetContractInfoByIdService(id int64) (contractInfo []*model.ContractInfo) {
-	core.GetDB().First(&contractInfo, id)
-	return
+func GetContractInfoByIdService(id int64) dto.CreateContractInfoDTO {
+	var schema *model.ContractInfo
+	core.GetDB().First(&schema, id)
+	return dto.ContractInfoDTOFromGorm(schema)
 }

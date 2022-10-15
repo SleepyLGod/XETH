@@ -129,7 +129,7 @@ func RouterInit() {
 		cttInfoGroup.POST("/create-ctt", controller.CreateContractInfoWithDTO)
 		cttInfoGroup.GET("/get-ctts", controller.GetContractInfos)
 		cttInfoGroup.POST("/del-ctt-by-id", controller.DeleteContractInfoById)
-		cttInfoGroup.POST("/get-ctt-by-id", controller.GetContractInfoById)
+		cttInfoGroup.POST("/get-ctt-by-id", controller.GetContractInfoById) // 当ID不存在时，会返回"0"Ctt
 		cttInfoGroup.POST("/get-ctts-with-constraints", controller.GetContractInfoWithConstraints)
 	}
 
