@@ -107,7 +107,7 @@ func RouterInit() {
 		txnGroup.POST("/create-txn", controller.CreateBlockTransactionWithDTO)
 		txnGroup.GET("/get-txns", controller.GetBlockTransactions)
 		txnGroup.POST("/del-txn-by-id", controller.DeleteBlockTransactionById)
-		txnGroup.POST("/get-txn-by-id", controller.GetBlockTransactionById)
+		txnGroup.POST("/get-txn-by-id", controller.GetBlockTransactionById) // 当ID不存在时，会返回"0"Txn
 		txnGroup.POST("/get-txns-with-constraints", controller.GetBlockTransactionsWithConstraints)
 	}
 

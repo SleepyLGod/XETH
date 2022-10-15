@@ -37,14 +37,16 @@ func CreateBlockTransactionServiceWithDTO(createBlockTxn dto.CreateBlockTransact
 	return false
 }
 
-func GetBlockTransactionsService() (blockTxnList []*model.BlockTransaction) {
-	core.GetDB().Find(&blockTxnList)
-	return blockTxnList
+func GetBlockTransactionsService() []dto.CreateBlockTransactionDTO {
+	var schema []*model.BlockTransaction
+	core.GetDB().Find(&schema)
+	return dto.BlockTransactionDTOS(schema)
 }
 
-func GetBlockTransactionsWithConstraintsService(constraints []core.QueryConstraint) (blockTxnList []*model.BlockTransaction) {
-	core.QueryWithDb(core.GetDB(), &blockTxnList, constraints)
-	return blockTxnList
+func GetBlockTransactionsWithConstraintsService(constraints []core.QueryConstraint) []dto.CreateBlockTransactionDTO {
+	var schema []*model.BlockTransaction
+	core.QueryWithDb(core.GetDB(), &schema, constraints)
+	return dto.BlockTransactionDTOS(schema)
 }
 
 func DeleteBlockTransactionByIdService(id int64) (err error, ok bool) {
@@ -56,7 +58,8 @@ func DeleteBlockTransactionByIdService(id int64) (err error, ok bool) {
 	return err, true
 }
 
-func GetBlockTransactionByIdService(id int64) (blockTxn []*model.BlockTransaction) {
-	core.GetDB().First(&blockTxn, id)
-	return
+func GetBlockTransactionByIdService(id int64) dto.CreateBlockTransactionDTO {
+	var schema *model.BlockTransaction
+	core.GetDB().First(&schema, id)
+	return dto.BlockTransactionDTOFromGorm(schema)
 }

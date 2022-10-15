@@ -113,9 +113,9 @@ func (d *MysqlDriver) Create(v interface{}) error {
 //}
 
 type QueryConstraint struct {
-	FieldName string
-	Operator  string
-	Value     string
+	FieldName string `json:"fieldName"`
+	Operator  string `json:"operator"`
+	Value     string `json:"value"`
 }
 
 func QueryWithDb(db *gorm.DB, output interface{}, constraints []QueryConstraint) {
