@@ -140,7 +140,7 @@ func RouterInit() {
 		erc20Group.POST("/create-erc20", controller.CreateERC20TransactionWithDTO)
 		erc20Group.GET("/get-erc20s", controller.GetERC20Transactions)
 		erc20Group.POST("/del-erc20-by-id", controller.DeleteERC20TransactionById)
-		erc20Group.POST("/get-erc20-by-id", controller.GetERC20TransactionById)
+		erc20Group.POST("/get-erc20-by-id", controller.GetERC20TransactionById) // 当ID不存在时，会返回"0"ERC20
 		erc20Group.POST("/get-erc20s-with-constraints", controller.GetERC20TransactionsWithConstraints)
 	}
 
