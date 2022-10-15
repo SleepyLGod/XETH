@@ -30,14 +30,16 @@ func CreateInternalTransactionServiceWithDTO(createItnTxn dto.CreateInternalTran
 	return false
 }
 
-func GetInternalTransactionsService() (itnTxnList []*model.InternalTransaction) {
-	core.GetDB().Find(&itnTxnList)
-	return
+func GetInternalTransactionsService() []dto.CreateInternalTransactionDTO {
+	var schema []*model.InternalTransaction
+	core.GetDB().Find(&schema)
+	return dto.InternalTransactionDTOS(schema)
 }
 
-func GetInternalTransactionsWithConstraintsService(constraints []core.QueryConstraint) (itnTxnList []*model.InternalTransaction) {
-	core.QueryWithDb(core.GetDB(), &itnTxnList, constraints)
-	return
+func GetInternalTransactionsWithConstraintsService(constraints []core.QueryConstraint) []dto.CreateInternalTransactionDTO {
+	var schema []*model.InternalTransaction
+	core.QueryWithDb(core.GetDB(), &schema, constraints)
+	return dto.InternalTransactionDTOS(schema)
 }
 
 func DeleteInternalTransactionByIdService(id int64) (err error, ok bool) {
@@ -49,7 +51,8 @@ func DeleteInternalTransactionByIdService(id int64) (err error, ok bool) {
 	return err, true
 }
 
-func GetInternalTransactionByIdService(id int64) (itnTxn []*model.InternalTransaction) {
-	core.GetDB().First(&itnTxn, id)
-	return
+func GetInternalTransactionByIdService(id int64) dto.CreateInternalTransactionDTO {
+	var schema *model.InternalTransaction
+	core.GetDB().First(&schema, id)
+	return dto.InternalTransactionDTOFromGorm(schema)
 }

@@ -118,7 +118,7 @@ func RouterInit() {
 		itnTxnGroup.POST("/create-txn", controller.CreateInternalTransactionWithDTO)
 		itnTxnGroup.GET("/get-txns", controller.GetInternalTransactions)
 		itnTxnGroup.POST("/del-txn-by-id", controller.DeleteInternalTransactionById)
-		itnTxnGroup.POST("/get-txn-by-id", controller.GetInternalTransactionById)
+		itnTxnGroup.POST("/get-txn-by-id", controller.GetInternalTransactionById) // 当ID不存在时，会返回"0"Txn
 		itnTxnGroup.POST("/get-txns-with-constraints", controller.GetInternalTransactionsWithConstraints)
 	}
 
